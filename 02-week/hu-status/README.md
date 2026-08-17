@@ -5,10 +5,10 @@
 # Weekly Status - Week 02
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
-- SPRINT_GOAL:
+FULL_NAME: Daniela Sanabria Mosquera
+GITHUB_USER: DaniKaizenNetwork
+TEAM: The illusionists
+SPRINT_GOAL: Generation of firts documentacion(PDR) based in the intructions by the teacher
 <!-- CONFIG-END -->
 
 ## 1. User stories worked this week
@@ -17,7 +17,13 @@
 | HU-XXX-001 |  |  |  |
 
 ## 2. My individual contribution
--
+* Created and documented the user stories **HU-09 and HU-11** in GitHub Projects.
+* Defined the acceptance criteria, technical notes, endpoints, entities, and business rules required for each user story.
+* Organized the user stories by **microservice, priority, milestone, and story points**.
+* Documented the technical requirements for the **work order status progression** and **payment/partial payment registration** workflows.
+* Specified the validation rules for order status transitions, order status history, payment amounts, invoice balances, and automatic invoice status updates.
+* Added the necessary technical details to help the development team understand and implement the backend functionality.
+* Created and configured a test repository (Test1) to validate the deployment workflow.
 
 ## 3. Blockers and risks
 -
