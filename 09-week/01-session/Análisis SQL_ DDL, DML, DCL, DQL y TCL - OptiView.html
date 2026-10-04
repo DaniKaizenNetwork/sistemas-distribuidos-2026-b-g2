@@ -1,0 +1,983 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis SQL: DDL, DML, DCL, DQL y TCL - OptiView</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066CC;
+            --primary-dark: #0052A3;
+            --secondary: #00D9FF;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --neutral-dark: #1F2937;
+            --neutral-light: #F9FAFB;
+            --border-color: #E5E7EB;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--neutral-dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        /* Diagrama Central */
+        .central-diagram {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 60px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+
+        .sql-cycle {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .sql-component {
+            position: relative;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            animation: bounceIn 0.8s ease-out forwards;
+        }
+
+        .sql-component:nth-child(1) { animation-delay: 0.4s; }
+        .sql-component:nth-child(2) { animation-delay: 0.5s; }
+        .sql-component:nth-child(3) { animation-delay: 0.6s; }
+        .sql-component:nth-child(4) { animation-delay: 0.7s; }
+        .sql-component:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes bounceIn {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .component-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0 auto 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component-circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .component-circle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .component-circle:hover::before {
+            left: 100%;
+        }
+
+        .ddl-circle {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+        }
+
+        .dml-circle {
+            background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);
+        }
+
+        .dcl-circle {
+            background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+        }
+
+        .dql-circle {
+            background: linear-gradient(135deg, #43E97B 0%, #38F9D7 100%);
+        }
+
+        .tcl-circle {
+            background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%);
+        }
+
+        .component-code {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            background: var(--neutral-light);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Arrows */
+        .arrow {
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: var(--secondary);
+            top: 50%;
+            z-index: 0;
+        }
+
+        /* Grid de Tarjetas */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--primary);
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .card:nth-child(1) { animation-delay: 1s; }
+        .card:nth-child(2) { animation-delay: 1.1s; }
+        .card:nth-child(3) { animation-delay: 1.2s; }
+        .card:nth-child(4) { animation-delay: 1.3s; }
+        .card:nth-child(5) { animation-delay: 1.4s; }
+        .card:nth-child(6) { animation-delay: 1.5s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-status {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-left: auto;
+        }
+
+        .status-active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .features-list li.pending::before {
+            content: '⏳';
+            color: var(--warning);
+        }
+
+        /* Comparativa */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: #F3F4F6;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .comparison-table tr:hover {
+            background: #F9FAFB;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            border-top: 2px solid var(--border-color);
+            margin-top: 80px;
+            font-size: 0.95rem;
+        }
+
+        .footer p {
+            margin: 10px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        /* Stack Section */
+        .stack-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 1s ease-out 1.6s backwards;
+        }
+
+        .stack-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-box {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-box:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tech-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .tech-detail {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .central-diagram {
+                padding: 30px 20px;
+            }
+
+            .sql-cycle {
+                flex-direction: column;
+            }
+
+            .component-circle {
+                width: 110px;
+                height: 110px;
+                font-size: 0.95rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stack-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .diagram-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .component-circle {
+                width: 90px;
+                height: 90px;
+                font-size: 0.85rem;
+            }
+
+            .component-code {
+                font-size: 0.75rem;
+            }
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #E0F2FE 0%, #F0F9FF 100%);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>SQL en OptiView</h1>
+            <p>Análisis Completo: DDL, DML, DCL, DQL y TCL</p>
+            <p class="subtitle">🎯 Arquitectura de Microservicios con PostgreSQL 16 • Schema per Service</p>
+        </div>
+
+        <!-- Diagrama Central -->
+        <div class="central-diagram">
+            <div class="diagram-title">🔄 Ciclo Completo de Operaciones SQL</div>
+            <div class="sql-cycle">
+                <div class="sql-component">
+                    <div class="component-circle ddl-circle">
+                        <div>DDL</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;">Estructura</div>
+                    </div>
+                    <div class="component-code">CREATE TABLE<br>ALTER TABLE<br>CREATE INDEX</div>
+                </div>
+
+                <div class="sql-component">
+                    <div class="component-circle dml-circle">
+                        <div>DML</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;">Datos</div>
+                    </div>
+                    <div class="component-code">INSERT<br>UPDATE<br>DELETE</div>
+                </div>
+
+                <div class="sql-component">
+                    <div class="component-circle dcl-circle">
+                        <div>DCL</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;">Control</div>
+                    </div>
+                    <div class="component-code">GRANT<br>REVOKE<br>CREATE ROLE</div>
+                </div>
+
+                <div class="sql-component">
+                    <div class="component-circle dql-circle">
+                        <div>DQL</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;">Consultas</div>
+                    </div>
+                    <div class="component-code">SELECT<br>JOIN<br>WHERE</div>
+                </div>
+
+                <div class="sql-component">
+                    <div class="component-circle tcl-circle">
+                        <div>TCL</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;">Transacciones</div>
+                    </div>
+                    <div class="component-code">BEGIN<br>COMMIT<br>ROLLBACK</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjetas de Análisis -->
+        <div class="cards-grid">
+            <!-- DDL Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📐</div>
+                    <div class="card-title">DDL</div>
+                    <div class="card-status status-active">IMPLEMENTADO</div>
+                </div>
+                <div class="card-description">
+                    Data Definition Language: Estructura y esquemas de base de datos
+                </div>
+                <ul class="features-list">
+                    <li>Migraciones versadas con Flyway</li>
+                    <li>golang-migrate para servicios Go</li>
+                    <li>Índices parciales y únicos</li>
+                    <li>Triggers y funciones PL/pgSQL</li>
+                    <li>Soft delete estándar</li>
+                </ul>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Schemas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Tablas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DML Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">✏️</div>
+                    <div class="card-title">DML</div>
+                    <div class="card-status status-active">IMPLEMENTADO</div>
+                </div>
+                <div class="card-description">
+                    Data Manipulation Language: Crear, modificar y eliminar datos
+                </div>
+                <ul class="features-list">
+                    <li>INSERT vía ORM y seed migrations</li>
+                    <li>UPDATE con transacciones ACID</li>
+                    <li>DELETE = Soft delete (UPDATE deleted_at)</li>
+                    <li>Triggers automáticos</li>
+                    <li>Ledger inmutable (stock_movements)</li>
+                </ul>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Herramientas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Cobertura</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DCL Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔐</div>
+                    <div class="card-title">DCL</div>
+                    <div class="card-status status-pending">PENDIENTE</div>
+                </div>
+                <div class="card-description">
+                    Data Control Language: Permisos y control de acceso
+                </div>
+                <ul class="features-list">
+                    <li pending>Roles por servicio (diseñado)</li>
+                    <li pending>Permisos granulares (candidato)</li>
+                    <li pending>Row-Level Security (candidato)</li>
+                    <li pending>Auditoría de accesos</li>
+                    <li>✓ Schemas aislados (implementado)</li>
+                </ul>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Roles Plan</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">MVP</div>
+                        <div class="stat-label">En scope</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DQL Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔍</div>
+                    <div class="card-title">DQL</div>
+                    <div class="card-status status-active">IMPLEMENTADO</div>
+                </div>
+                <div class="card-description">
+                    Data Query Language: Consultas y recuperación de datos
+                </div>
+                <ul class="features-list">
+                    <li>ORM (JPA/Hibernate, GORM)</li>
+                    <li>REST APIs con paginación</li>
+                    <li>Índices optimizados</li>
+                    <li>ACL sin cross-schema JOINs</li>
+                    <li>Connection pooling (HikariCP)</li>
+                </ul>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">8+</div>
+                        <div class="stat-label">Endpoints</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Índices</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TCL Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔄</div>
+                    <div class="card-title">TCL</div>
+                    <div class="card-status status-active">IMPLEMENTADO</div>
+                </div>
+                <div class="card-description">
+                    Transaction Control Language: Integridad de transacciones
+                </div>
+                <ul class="features-list">
+                    <li>ACID guarantees en PostgreSQL</li>
+                    <li>@Transactional (Spring)</li>
+                    <li>Saga Pattern (distribuidas)</li>
+                    <li>Outbox Pattern (consistencia)</li>
+                    <li>READ COMMITTED isolation</li>
+                </ul>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Patrones</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Servicios</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🐘</div>
+                    <div class="card-title">PostgreSQL 16</div>
+                    <div class="card-status status-active">ACTIVO</div>
+                </div>
+                <div class="card-description">
+                    Motor de base de datos central: Una instancia, múltiples schemas
+                </div>
+                <ul class="features-list">
+                    <li>Instancia única compartida</li>
+                    <li>4 schemas aislados</li>
+                    <li>JSONB para prescripciones</li>
+                    <li>Triggers y funciones PL/pgSQL</li>
+                    <li>Secuencias auto-incrementales</li>
+                </ul>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Versión</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stack Tecnológico -->
+        <div class="stack-section">
+            <div class="stack-title">📚 Stack Tecnológico</div>
+            <div class="stack-grid">
+                <div class="tech-box" style="background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);">
+                    <div class="tech-name">Java</div>
+                    <div class="tech-detail">ms-pacientes, ms-inventario</div>
+                </div>
+                <div class="tech-box" style="background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);">
+                    <div class="tech-name">Go</div>
+                    <div class="tech-detail">ms-ordenes, ms-facturacion</div>
+                </div>
+                <div class="tech-box" style="background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);">
+                    <div class="tech-name">Angular</div>
+                    <div class="tech-detail">Frontend</div>
+                </div>
+                <div class="tech-box" style="background: linear-gradient(135deg, #43E97B 0%, #38F9D7 100%);">
+                    <div class="tech-name">Flyway</div>
+                    <div class="tech-detail">Migraciones Java</div>
+                </div>
+                <div class="tech-box" style="background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%);">
+                    <div class="tech-name">golang-migrate</div>
+                    <div class="tech-detail">Migraciones Go</div>
+                </div>
+                <div class="tech-box" style="background: linear-gradient(135deg, #30CFD0 0%, #330867 100%);">
+                    <div class="tech-name">PostgreSQL 16</div>
+                    <div class="tech-detail">Base de Datos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tablas Comparativas -->
+        <div class="central-diagram">
+            <div class="diagram-title">📊 Comparativa de Implementación</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Tipo SQL</th>
+                        <th>Implementación</th>
+                        <th>Herramienta</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DDL</strong></td>
+                        <td>Migraciones versadas</td>
+                        <td>Flyway / golang-migrate</td>
+                        <td><span class="badge">✅ Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DML-INSERT</strong></td>
+                        <td>ORM + Seeds</td>
+                        <td>JPA / GORM</td>
+                        <td><span class="badge">✅ Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DML-UPDATE</strong></td>
+                        <td>Transacciones ACID</td>
+                        <td>Spring @Transactional</td>
+                        <td><span class="badge">✅ Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DML-DELETE</strong></td>
+                        <td>Soft delete</td>
+                        <td>UPDATE deleted_at</td>
+                        <td><span class="badge">✅ Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DCL</strong></td>
+                        <td>Roles y permisos</td>
+                        <td>GRANT / REVOKE</td>
+                        <td><span class="badge" style="background: #FEF3C7; color: #92400E;">⏳ Diseño</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DQL</strong></td>
+                        <td>REST API + ORM</td>
+                        <td>Spring / GORM</td>
+                        <td><span class="badge">✅ Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>TCL</strong></td>
+                        <td>ACID + Saga</td>
+                        <td>BEGIN / COMMIT</td>
+                        <td><span class="badge">✅ Activo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Principios Clave -->
+        <div class="central-diagram">
+            <div class="diagram-title">🎯 Principios de Arquitectura</div>
+
+            <div class="highlight-box">
+                <strong>Schema per Service:</strong> Cada microservicio tiene su propio schema. No hay JOINs cross-schema ni FKs entre schemas. Los datos se comparten vía REST APIs o eventos.
+            </div>
+
+            <div class="highlight-box">
+                <strong>Migraciones Forward-Only:</strong> Una vez ejecutada en producción, una migración nunca se revierte. Los cambios incompatibles se hacen en dos fases: agregar columna nueva → drop columna vieja.
+            </div>
+
+            <div class="highlight-box">
+                <strong>Soft Delete por Defecto:</strong> Los registros se marcan como eliminados (deleted_at = NOW()) en lugar de borrados físicamente. Preserva auditoría, cumple GDPR, evita problemas con FKs.
+            </div>
+
+            <div class="highlight-box">
+                <strong>Transacciones Distribuidas (Saga + Outbox):</strong> Las operaciones que cruzan servicios usan Saga Pattern (compensating transactions) y Outbox Pattern (garantía de publicación de eventos).
+            </div>
+
+            <div class="highlight-box">
+                <strong>Validación en Doble Capas:</strong> Reglas de negocio en la aplicación + constraints en la BD. La BD es la segunda línea de defensa.
+            </div>
+        </div>
+
+        <!-- Resumen Final -->
+        <div class="central-diagram">
+            <div class="diagram-title">📋 Resumen Ejecutivo</div>
+            <table class="comparison-table">
+                <tbody>
+                    <tr>
+                        <td><strong>Total Servicios</strong></td>
+                        <td>4 microservicios (2 Java + 2 Go)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Schemas</strong></td>
+                        <td>4 schemas independientes en PostgreSQL 16</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Tablas</strong></td>
+                        <td>15+ tablas modeladas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Migración Tool</strong></td>
+                        <td>Flyway (Java) + golang-migrate (Go)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Patrones Transaccionales</strong></td>
+                        <td>ACID + Saga Pattern + Outbox Pattern</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nivel Aislamiento</strong></td>
+                        <td>READ COMMITTED (PostgreSQL 16)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Índices</strong></td>
+                        <td>12+ índices (simples, compuestos, parciales, únicos)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Implementación Completa</strong></td>
+                        <td>DDL ✅ DML ✅ DCL ⏳ DQL ✅ TCL ✅</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Proyecto OptiView</strong> • Documentación de SQL y Arquitectura</p>
+            <p>Análisis realizado: 2026-10-01 • Sistema de Órdenes de Lentes Oftálmicos</p>
+            <p style="margin-top: 20px; color: #ccc;">🏥 Healthcare + 📊 Distributed Systems + 💾 PostgreSQL 16</p>
+        </div>
+    </div>
+
+    <script>
+        // Animación interactiva de componentes
+        document.querySelectorAll('.component-circle').forEach((element, index) => {
+            element.addEventListener('mouseenter', () => {
+                element.style.animation = 'pulse 0.6s ease-out';
+            });
+        });
+
+        document.querySelectorAll('.card').forEach((card) => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderTopColor = getComputedStyle(card).borderTopColor;
+            });
+        });
+
+        // Scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
+</body></html>
