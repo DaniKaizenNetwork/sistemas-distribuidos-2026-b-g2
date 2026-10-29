@@ -12,7 +12,8 @@ Source: `05-release/optiview-platform-v1.0.0/backend/src/test/java/co/opticacent
 
 - Test source inspected; neither test has been run during this work.
 - The checkout contains `pom.xml` but no Maven wrapper, and Maven is not available on PATH in this environment.
-- The integration test uses Testcontainers and is configured to skip when Docker is unavailable.`r`n- The Docker CLI is installed, but its daemon is unavailable in this session (Docker API named pipe not found).
+- The integration test uses Testcontainers and is configured to skip when Docker is unavailable.
+- The Docker CLI is installed, but its daemon is unavailable in this session (Docker API named pipe not found).
 - CI result and Actions run link: pending. Do not report a passing check until a real run is visible.
 
 To run when Maven and Docker are available, from `05-release/optiview-platform-v1.0.0/backend/` execute `mvn -Dtest=OptiviewIntegrationTest test`. Record the actual exit status and link the corresponding CI run in the checkpoint submission.
