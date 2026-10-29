@@ -12,7 +12,4 @@ Thanks for mapping the sales-reporting boundary and completing all six STRIDE ca
 
 ## Student-authored reflection
 
-Write this section yourself after reading the peer feedback and citing the physical copy. No reflection text has been supplied by AI.
-
-- What did this review teach me about making a threat model verifiable?
-- Which change in my own TB1 analysis will I make after reviewing a peer’s work?
+Al consultar el libro *Sistemas Distribuidos: Principios y Paradigmas*, comprendí que para evitar fallos es de gran importancial una correcta comunicación entre servicios, apoyada en sólidos modelos de consistencia y tolerancia a fallos. Esta base teórica me permitió detectar posibles problemas de sincronización al revisar el PR #44, donde reafirmé la importancia de mantener siempre claros los contratos y la documentación de las API. Por todo esto, el riesgo de TB1 que priorizaría es la falta de comunicación o desajuste de replicación entre los servicios, ya que cualquier error en este nivel podría afectar drásticamente el funcionamiento, la estabilidad y la integridad de nuestros datos.
