@@ -46,7 +46,8 @@ These are issue drafts for `code-corhuila/opti-docs` and the team security board
 
 ## Submission checklist
 
-- [ ] Create exactly these three issues in `code-corhuila/opti-docs` and apply the `security` label plus the stated priority.
-- [ ] Copy the created issue links into the CP3 checkpoint record.
-- [ ] Confirm the physical copy’s CORHUILA call number before finalizing the bibliography.
+- [x] Created [#48 — deployment-specific JWT signing key (P0)](https://github.com/code-corhuila/opti-docs/issues/48) with `security` and `P0` labels.
+- [x] Created [#49 — login throttling and credential-stuffing detection (P1)](https://github.com/code-corhuila/opti-docs/issues/49) with `security` and `P1` labels.
+- [x] Created [#50 — actor-linked patient and work-order audit (P1)](https://github.com/code-corhuila/opti-docs/issues/50) with `security` and `P1` labels.
+- [x] The student confirmed the physical copy's CORHUILA library signatura as `0001226`.
 
