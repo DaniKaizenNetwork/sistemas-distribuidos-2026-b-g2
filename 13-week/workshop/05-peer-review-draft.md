@@ -1,8 +1,10 @@
-# CP5 — Peer review draft for opti-docs PR #44
+# CP5 — Peer review of opti-docs PR #44
 
-Reviewed artifact: `origin/security/stride-julianvargasb` (`05-architecture/security/stride-julianvargasb.md`). Draft only; no review was submitted.
+Reviewed artifact: PR [#44 — Threat model: opti-api-gateway to opti-sales-api](https://github.com/code-corhuila/opti-docs/pull/44), branch `security/stride-julianvargasb` (`05-architecture/security/stride-julianvargasb.md`). The review was submitted as a COMMENT review: [view submitted review](https://github.com/code-corhuila/opti-docs/pull/44#pullrequestreview-5699251397).
 
-## Suggested review comment
+My CP2 STRIDE analysis is available in [PR #51](https://github.com/code-corhuila/opti-docs/pull/51).
+
+## Submitted review comment
 
 Thanks for mapping the sales-reporting boundary and completing all six STRIDE categories. Before this is ready to merge, please make the following parts concrete:
 
