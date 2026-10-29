@@ -17,7 +17,7 @@ These are issue drafts for `code-corhuila/opti-docs` and the team security board
 - A token signed with the configured key is accepted; one signed with another key is rejected with 401.
 - The team documents key rotation and invalidates tokens signed with a retired key.
 
-**Book citation [B]:** Tanenbaum, Andrew S., and Maarten Van Steen. *Sistemas distribuidos: principios y paradigmas*. 2.ª ed. Pearson Educación, 2008, ISBN 978-970-26-1280-3, pp. 398–399. CORHUILA physical copy, library signature/identifier 0001226 (reported by the student). The secure-channel discussion covers peer authentication and message integrity; those properties motivate protecting the token-signing key.
+**Book citation [B]:** Tanenbaum, Andrew S., and Maarten Van Steen. *Sistemas distribuidos: principios y paradigmas*. 2.ª ed. Pearson Educación, 2008, ISBN 978-970-26-1280-3, §9.4.1, pp. 428–432 (key management). CORHUILA physical copy, library signatura 0001226 (reported by the student). The key-management section supports provisioning, protecting, and rotating the JWT signing secret.
 
 ## 2. [security] Rate-limit public login attempts and detect credential stuffing
 
