@@ -5,25 +5,28 @@
 # Weekly Status - Week 14
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
+- FULL_NAME: Daniela Sanabria Mosquera
+- GITHUB_USER: DaniKaizenNetwork
+- TEAM: The illusionists
 - SPRINT_GOAL:
 <!-- CONFIG-END -->
 
 ## 1. User stories worked this week
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
 |---|---|---|---|
-| HU-XXX-001 |  |  |  |
+| | | todo | |
 
 ## 2. My individual contribution
--
+- Carried over from Week 13: PR `#51` (STRIDE analysis) — review/merge status pending.
+- Carried over from Week 13: issue `#48` (P0, fallback JWT signing key) — open, blocks deployment.
+- Carried over from Week 13: issues `#49` and `#50` (P1, login hardening + write audit) — open.
 
 ## 3. Blockers and risks
--
+- Issue `#48` (P0) remains unresolved and continues to block any non-local deployment (per `05-architecture/security/stride-DaniKaizenNetwork.md` §5).
 
 ## 4. Plan for next week
--
+- Close out review on PR `#51`.
+- Start implementation work on issues `#48` (P0), `#49` and `#50` (P1).
 
 ## 5. Compliance self-check
 - [ ] Conventional Commits - `type(scope): summary`
