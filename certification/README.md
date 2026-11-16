@@ -22,35 +22,35 @@ Issue date: 2026-11-15
 
 | Date | Hours | Chapters or labs | Evidence file |
 |---|---:|---|---|
-| 2026-11-01 | [enter actual hours] | Chapter 1 | evidence/01-chapter-01.png |
-| 2026-11-01 | [enter actual hours] | Chapter 2 | evidence/02-chapter-02.png |
-| 2026-11-01 | [enter actual hours] | Chapter 3 | evidence/03-chapter-03.png |
-| 2026-11-07 | [enter actual hours] | Chapter 4 | evidence/04-chapter-04.png |
-| 2026-11-07 | [enter actual hours] | Chapter 5 | evidence/05-chapter-05.png |
-| 2026-11-09 | [enter actual hours] | Chapter 6 | evidence/06-chapter-06.png |
-| 2026-11-09 | [enter actual hours] | Chapter 7 | evidence/07-chapter-07.png |
-| 2026-11-09 | [enter actual hours] | Chapter 8 | evidence/08-chapter-08.png |
-| 2026-11-13 | [enter actual hours] | Chapter 9 | evidence/09-chapter-09.png |
-| 2026-11-13 | [enter actual hours] | Chapter 10 | evidence/10-chapter-10.png |
-| 2026-11-13 | [enter actual hours] | Chapter 11 | evidence/11-chapter-11.png |
-| 2026-11-13 | [enter actual hours] | Chapter 12 | evidence/12-chapter-12.png |
-| 2026-11-15 | [enter actual hours] | Chapter 13 | evidence/13-chapter-13.png |
-| 2026-11-15 | [enter actual hours] | Chapter 14 | evidence/14-chapter-14.png |
-| 2026-11-15 | [enter actual hours] | Lab 1 | evidence/15-lab-1.png |
-| 2026-11-15 | [enter actual hours] | Lab 2 | evidence/16-lab-2.png |
-| 2026-11-15 | [enter actual hours] | Lab 3 | evidence/17-lab-3.png |
-| 2026-11-15 | [enter actual hours] | Lab 4 | evidence/18-lab-4.png |
-| 2026-11-15 | [enter actual hours] | Final exam | evidence/19-final-exam.png |
-| **Total** | **[calculate actual total]** |  |  |
+| 2026-11-01 |  | Chapter 1 | evidence/01-chapter-01.png |
+| 2026-11-01 |  | Chapter 2 | evidence/02-chapter-02.png |
+| 2026-11-01 |  | Chapter 3 | evidence/03-chapter-03.png |
+| 2026-11-07 | ] | Chapter 4 | evidence/04-chapter-04.png |
+| 2026-11-07 |  | Chapter 5 | evidence/05-chapter-05.png |
+| 2026-11-09 |  | Chapter 6 | evidence/06-chapter-06.png |
+| 2026-11-09 |  | Chapter 7 | evidence/07-chapter-07.png |
+| 2026-11-09 |  | Chapter 8 | evidence/08-chapter-08.png |
+| 2026-11-13 |  | Chapter 9 | evidence/09-chapter-09.png |
+| 2026-11-13 |  | Chapter 10 | evidence/10-chapter-10.png |
+| 2026-11-13 |  | Chapter 11 | evidence/11-chapter-11.png |
+| 2026-11-13 |  | Chapter 12 | evidence/12-chapter-12.png |
+| 2026-11-15 |  | Chapter 13 | evidence/13-chapter-13.png |
+| 2026-11-15 |  | Chapter 14 | evidence/14-chapter-14.png |
+| 2026-11-15 |  | Lab 1 | evidence/15-lab-1.png |
+| 2026-11-15 |  | Lab 2 | evidence/16-lab-2.png |
+| 2026-11-15 | | Lab 3 | evidence/17-lab-3.png |
+| 2026-11-15 |  | Lab 4 | evidence/18-lab-4.png |
+| 2026-11-15 |  | Final exam | evidence/19-final-exam.png |
+| **Total** |  |  |  |
 
 ## Labs
 
 | Evidence file | Lab name | What I built | What failed first and how I fixed it |
 |---|---|---|---|
-| evidence/15-lab-1.png | Design Cases and Practices of an O&M Solution | [Describe what you actually built] | [Describe what actually failed and how you fixed it] |
-| evidence/16-lab-2.png | High-Performance Network Solution | [Describe what you actually built] | [Describe what actually failed and how you fixed it] |
-| evidence/17-lab-3.png | Highly Elastic Service System | [Describe what you actually built] | [Describe what actually failed and how you fixed it] |
-| evidence/18-lab-4.png | Highly Reliable Database Solution | [Describe what you actually built] | [Describe what actually failed and how you fixed it] |
+| evidence/15-lab-1.png | Design Cases and Practices of an O&M Solution | 
+| evidence/16-lab-2.png | High-Performance Network Solution | 
+| evidence/17-lab-3.png | Highly Elastic Service System |
+| evidence/18-lab-4.png | Highly Reliable Database Solution |
 
 ## Final exam
 
